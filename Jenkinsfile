@@ -36,7 +36,7 @@ pipeline {
 // 2 slashes to comment
     stage('Deploy MYSQL App'){
       steps{
-        sh 'docker run -d --name trio-mysql --network flask_app_network_2 --volume db-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=password MYSQL_DATABASE=flask-db flask-app'
+        sh 'docker run -d --name trio-mysql --network flask_app_network_2 --volume db-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=flask-db flask-app'
       }
     }
     stage('Deploy Flask App'){
