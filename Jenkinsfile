@@ -46,7 +46,7 @@ pipeline {
     }
     stage('Deploy nginx App'){
       steps{
-        sh 'docker run -d -p 80:80 --network flask_app_network_2 --name nginx --mount type=bind,source=$(pwd)/nginx.conf,target=/etc/nginx/nginx.conf nginx:alpine'
+        sh 'docker run -d -p 80:80 --network flask_app_network_2 --name nginx --mount type=bind,source=$(pwd)/nginx/nginx.conf,target=/etc/nginx/nginx.conf nginx:alpine'
       }
     }
   }
