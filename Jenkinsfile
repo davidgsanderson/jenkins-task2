@@ -1,5 +1,8 @@
 pipeline {
   agent any
+  environment {
+    MYSQL_VAR = credentials('MYSQL_ROOT_PASSWORD')
+  }
   stages {
     stage ('Clean-up') {
       steps {
@@ -36,12 +39,12 @@ pipeline {
 // 2 slashes to comment
     stage('Deploy MYSQL App'){
       steps{
-        sh 'docker run -d --name trio-mysql --network flask_app_network_2 --volume db-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=${DATABASE_PASSWORD} -e MYSQL_DATABASE=flask-db trio-mysql'
+        sh 'docker run -d --name trio-mysql --network flask_app_network_2 --volume db-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=$MYSQL_VAR -e MYSQL_DATABASE=flask-db trio-mysql'
       }
     }
     stage('Deploy Flask App'){
       steps{
-        sh 'docker run -d --name flask-app --network flask_app_network_2 -e YOUR_NAME=Andrew -e MYSQL_ROOT_PASSWORD=${DATABASE_PASSWORD} flask-app'
+        sh 'docker run -d --name flask-app --network flask_app_network_2 -e YOUR_NAME=Andrew -e MYSQL_ROOT_PASSWORD=$MYSQL_VAR flask-app'
       }
     }
     stage('Deploy nginx App'){
