@@ -7,6 +7,7 @@ pipeline {
     stage ('Clean-up') {
       steps {
         script {
+          I have broken the task....
           sh 'docker rm -f $(docker ps -a) || true'
           sh 'docker rmi $(docker images) || true'
           sh 'docker volume rm $(docker volume ls) || true'
